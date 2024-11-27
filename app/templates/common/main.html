@@ -1,0 +1,21 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Flask Project</h1>
+<p>This is the main page of our team project. Use the navigation menu above or the links below to explore each team member's page.</p>
+
+<h2>Team Members</h2>
+<ul>
+    <li><a href="{{ url_for('csm.index') }}">CSM's Page</a></li>
+    <li><a href="{{ url_for('hjw.index') }}">HJW's Page</a></li>
+    <li><a href="{{ url_for('hyl.index') }}">HYL's Page</a></li>
+    <li><a href="{{ url_for('jsw.index') }}">JSW's Page</a></li>
+    <li><a href="{{ url_for('ksj.index') }}">KSJ's Page</a></li>
+    <li><a href="{{ url_for('ssm.index') }}">SSM's Page</a></li>
+</ul>
+
+<h2>About the Project</h2>
+<p>This project demonstrates the use of Flask for team collaboration. Each member has their own page to showcase their work and ideas.</p>
+{% endblock %}
