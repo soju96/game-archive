@@ -1,0 +1,112 @@
+/* ----------- 헤더 전체 영역 스타일 ----------- */
+.custom-navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0);
+    z-index: 1000;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-navbar-contents {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0px 30px;
+}
+
+/* 헤더 내부 박스 스타일 */
+.header-box {
+    width: 33.1%;
+}
+
+.header-box:nth-child(2) {
+    display: flex !important;
+    justify-content: center;
+}
+
+.header-box:nth-child(3) {
+    display: flex !important;
+    justify-content: right;
+}
+
+/* ----------- 왼쪽 네비게이션 메뉴 스타일 ----------- */
+.custom-nav-menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.custom-nav-link {
+    padding: 10px;
+    font-size: 17px;
+    color: white;
+    text-decoration: none;
+}
+
+.custom-nav-link:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(0, 162, 255, 0.6);
+}
+
+/* ----------- 로고 스타일 ----------- */
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 450px;
+}
+
+.brand-title a {
+    font-family: 'intelone-mono-font-family-italic';
+    color: #b85cff;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.site-logo {
+    width: 55px;
+    height: auto;
+    margin-right: 10px;
+}
+
+/* ----------- 우측 버튼 스타일 ----------- */
+.navbtn {
+    outline: none;
+    width: 130px;
+    height: 40px;
+    border: 2px solid #000;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.3vh;
+    font-family: 'intelone-mono-font-family-italic';
+    background: #fff;
+    color: #000;
+}
+
+.navbtn:hover {
+    background: #000;
+    color: #fff;
+    box-shadow: -7px -7px 20px 0px #0009, -4px -4px 5px 0px #0009, 7px 7px 20px 0px #fff2, 4px 4px 5px 0px #fff1;
+}
+
+.navbtn::before, .navbtn::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 0;
+    background: #000;
+    transition: 400ms ease all;
+}
+
+.navbtn:hover::before, .navbtn:hover::after {
+    width: 100%;
+    background: #fff;
+}

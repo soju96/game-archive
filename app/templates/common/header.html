@@ -1,13 +1,36 @@
-<header>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('main.index') }}">Main</a></li>
-            <li><a href="{{ url_for('csm.index') }}">CSM-news</a></li>
-            <li><a href="{{ url_for('hjw.index') }}">HJW-login</a></li>
-            <li><a href="{{ url_for('hyl.index') }}">HYL</a></li>
-            <li><a href="{{ url_for('jsw.index') }}">JSW-Q&A</a></li>
-            <li><a href="{{ url_for('ksj.index') }}">KSJ-gmae-discount</a></li>
-            <li><a href="{{ url_for('ssm.index') }}">SSM-game-guide</a></li>
-        </ul>
-    </nav>
+<!-- templates/header.html -->
+<header class="custom-navbar">
+    <div class="custom-navbar-contents">
+        <!-- 카테고리 내비게이션 메뉴 -->
+        <div class="header-box">
+            <nav class="custom-nav-menu">
+                <a href="{{ url_for('ksj.index') }}" class="custom-nav-link">Deals & Discounts</a>
+                <a href="{{ url_for('ssm.index') }}" class="custom-nav-link">Tips & Guides</a>
+                <a href="{{ url_for('csm.index') }}" class="custom-nav-link">Game News</a>
+                <a href="{{ url_for('jsw.index') }}" class="custom-nav-link">Q&A Corner</a>
+            </nav>
+        </div>
+        <!-- 로고 및 이름 -->
+        <div class="header-box">
+            <div class="brand">
+                <img src="joystick.png" alt="GAMCAVE Logo" class="site-logo">
+                <div class="brand-title">
+                    <a href="#"> GamCave</a>
+                </div>
+            </div>
+        </div>
+        <!-- Sign Up 버튼 -->
+        <div class="header-box">
+            <div class="custom-nav-right buttons">
+                <a href="{{ url_for('hjw.index') }}">
+                    <button class="navbtn">
+                        Login
+                    </button>
+                </a>
+                <button class="navbtn">
+                    Sign Up
+                </button>
+            </div>
+        </div>
+    </div>
 </header>
