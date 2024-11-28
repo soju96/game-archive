@@ -63,8 +63,8 @@ def get_games():
                     original_price_display = "무료"  # 또는 다른 기본값
                     final_price_display = "무료"
                 else:
-                    original_price_display = int(original_price / 100)  # 가격을 원 단위로 변환
-                    final_price_display = int(final_price / 100)
+                    original_price_display = f"{int(original_price / 100):,}".replace(",", ".")  # 예: "1.500.000"
+                    final_price_display = f"{int(final_price / 100):,}".replace(",", ".")  # 예: "1.350.000"
 
                 games.append({
                     "id": game_id,
