@@ -125,14 +125,14 @@ def index():
 
 # 쿠폰 데이터 저장 (임시 저장소)
 coupons = {
-    "remaining": 10,  # 남은 쿠폰 수
+    "remaining": 100,  # 남은 쿠폰 수
     "generated_coupons": [],  # 발급된 쿠폰 리스트
     "reset_time": None  # 다음 리셋 시간
 }
 
 def reset_coupons():
-    """매일 쿠폰 리셋 (10개 제한)"""
-    coupons["remaining"] = 10
+    """매일 쿠폰 리셋 (100개 제한)"""
+    coupons["remaining"] = 100
     coupons["generated_coupons"] = []
     coupons["reset_time"] = datetime.now() + timedelta(days=1)
     logging.info("쿠폰이 리셋되었습니다.")
