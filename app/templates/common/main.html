@@ -1,21 +1,85 @@
+<!-- templates/main.html -->
 {% extends 'common/base.html' %}
 
-{% block title %}Main Page{% endblock %}
+{% block title %}Home - Game Achive{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hyl-css/main.css') }}">
+{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Flask Project</h1>
-<p>This is the main page of our team project. Use the navigation menu above or the links below to explore each team member's page.</p>
+<div class="board-section">
+    <!-- 슬라이드쇼 추가 -->
+    <div class="news-section">
+        <div class="image-slider">
+            <div class="slide">
+                <img src="{{ url_for('static', filename='images/slide1.jpg') }}" alt="Slide 1" class="slider-image">
+                <div class="slide-text">
+                    <h2>Game News Title 1</h2>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="{{ url_for('static', filename='images/slide2.jpg') }}" alt="Slide 1" class="slider-image">
+                <div class="slide-text">
+                    <h2>Game News Title 2</h2>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="{{ url_for('static', filename='images/slide3.jpg') }}" alt="Slide 1" class="slider-image">
+                <div class="slide-text">
+                    <h2>Game News Title 3</h2>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing</p>
+                </div>
+            </div>
+        </div>
+        <div class="news-list">
+            <h1>
+                <a href="#">Hot Game News</a>
+            </h1>
+            <ol class="olcards">
+                <li>
+                    <div class="content">
+                        <div class="icon">🥞</div>
+                        <div class="title">Lorem Ipsum</div>
+                        <div class="text">1 hours ago</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        <div class="icon">🚕</div>
+                        <div class="title">Lorem Ipsum</div>
+                        <div class="text">3 hours ago</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        <div class="icon">😸</div>
+                        <div class="title">Lorem Ipsum</div>
+                        <div class="text">4 hours ago</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        <div class="icon">🦉</div>
+                        <div class="title">Lorem Ipsum</div>
+                        <div class="text">2 days ago</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="content">
+                        <div class="icon">🤗</div>
+                        <div class="title">Lorem Ipsum</div>
+                        <div class="text">3 days ago</div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}
 
-<h2>Team Members</h2>
-<ul>
-    <li><a href="{{ url_for('csm.index') }}">CSM's Page</a></li>
-    <li><a href="{{ url_for('hjw.index') }}">HJW's Page</a></li>
-    <li><a href="{{ url_for('hyl.index') }}">HYL's Page</a></li>
-    <li><a href="{{ url_for('jsw.index') }}">JSW's Page</a></li>
-    <li><a href="{{ url_for('ksj.index') }}">KSJ's Page</a></li>
-    <li><a href="{{ url_for('ssm.index') }}">SSM's Page</a></li>
-</ul>
-
-<h2>About the Project</h2>
-<p>This project demonstrates the use of Flask for team collaboration. Each member has their own page to showcase their work and ideas.</p>
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/hyl-js/main.js') }}"></script>
 {% endblock %}
