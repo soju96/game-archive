@@ -60,55 +60,32 @@
     <main>
 
     <!-- 타임딜 홍보 영역 -->
-    <section class="time-deal-section">
-        <img src="{{ url_for('static', filename='images/main-hyl.jpg') }}" alt="Time Deal Background" class="time-deal-image">
-        <div class="center-content center-text">
-            <div class="tag-flex">
-                <div class="custom-title" id="subtitle"></div>
-            </div>
-            <h1 class="large-heading" id="typewriter"></h1>
-        </div>
-    </section>
+    <a href="{{ url_for('ksj.timedeal') }}" class="time-deal-link">
+        
+        <section class="time-deal-section">
+            <img src="{{ url_for('static', filename='images/main-hyl.jpg') }}" alt="Time Deal Background" class="time-deal-image">
+            <div class="center-content center-text">
+                <div class="tag-flex">
+                    <div class="custom-title" id="subtitle">
+                    </div>
+                </div>
+                <h1 class="large-heading" id="typewriter"></h1>
     
+                <p class="reset-time">
+                    Coupons reset at: {{ reset_time }}
+                </p>
+            </div>
+        </section>
+        
+    </a>
     <!-- 검색창 영역 -->
     <div class="search-filter-section">
-        <!-- 검색창 -->
-        <div class="search-bar-container">
-            <input type="text" class="search-bar" placeholder="Search for guides, posts, and more...">
-            <button class="search-button">Search</button>
-        </div>
-        
-        <!-- 필터 버튼들 -->
-        <div class="hyl-filter-buttons">
-            <div class="hyl-dropdown">
-                <button class="hyl-dropdown-button">Category <span>▼</span></button>
-                <div class="hyl-dropdown-content">
-                    <a href="#">Deals & Discounts</a>
-                    <a href="#">Tips & Guides</a>
-                    <a href="#">Game News</a>
-                    <a href="#">Q&A Corner</a>
-                </div>
-            </div>
-        
-            <div class="hyl-dropdown">
-                <button class="hyl-dropdown-button">Date <span>▼</span></button>
-                <div class="hyl-dropdown-content">
-                    <a href="#">Today</a>
-                    <a href="#">This Week</a>
-                    <a href="#">This Month</a>
-                 </div>
-             </div>
-         
-             <div class="hyl-dropdown">
-                 <button class="hyl-dropdown-button">Tags <span>▼</span></button>
-                 <div class="hyl-dropdown-content">
-                     <a href="#">New</a>
-                     <a href="#">Popular</a>
-                     <a href="#">Trending</a>
-                 </div>
-             </div>
+    <!-- 검색창과 필터 아이콘 -->
+    <div class="search-bar-container">
+        <input type="text" class="search-bar" placeholder="Search for guides, posts, and more...">
+        <button class="search-button">Search</button>
+    </div>
 
-         </div>
      </div>
      
      </main>
