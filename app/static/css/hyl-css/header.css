@@ -441,7 +441,7 @@
 
 
 /* ----------- 반응형 레이아웃 ----------- */
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
     .custom-nav-link,
     .navbtn {
         display: none; /* 네비게이션 숨김 */
