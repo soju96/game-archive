@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Game Achive{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+
+    <!-- 부트스트랩 CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
      <!-- 헤더 전용 CSS -->
      <link rel="stylesheet" href="{{ url_for('static', filename='css/hyl-css/header.css') }}">
 
@@ -20,11 +23,23 @@
         {% include 'common/header.html' %}
 
         <!-- 페이지 내용 -->
-        {% block content %}
+        <div class="board-container ">
+            {% block content %}
         {% endblock %}
+        </div>
     </div>
 
-    {% include 'common/footer.html' %}
+        <!-- 푸터 가져오기 -->
+        {% include 'common/footer.html' %}
+
+    <!-- 부트스트랩 JS -->
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    
+    <!-- 헤더 JS -->
+    <script src="{{ url_for('static', filename='js/hyl-js/header.js') }}"></script>
+
+    <!-- 페이지별 추가 JS -->
+    {% block extra_js %}
+    {% endblock %}
 </body>
 </html>
