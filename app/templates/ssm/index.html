@@ -1,8 +1,43 @@
+<!-- ssm/templates/ssm/index.html -->
 {% extends 'common/base.html' %}
-
-{% block title %}SSM's Page{% endblock %}
-
 {% block content %}
-<h1>Welcome to lalala's Page</h1>
-<p>This page is managed by SSM. Learn more about the creative process and designs of SSM.</p>
+<div class="board-list">
+    <h1>공략 게시판</h1>
+    <div class="popular-posts">
+        <h2>인기 공략</h2>
+        <ul>
+            <li><a href="#">공략 더미 테스트 1</a> 조회수 520</li>
+            <li><a href="#">공략 더미 테스트 2</a> 조회수 550</li>
+            <li><a href="#">공략 더미 테스트 3</a> 조회수 549</li>
+        </ul>
+    </div>
+    <table class="board-table">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>조회수</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td><a href="{{ url_for('ssm.detail', post_id=post.id) }}">{{ post.title }}</a></td>
+                <td>{{ post.author }}</td>
+                <td>{{ post.views }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        <!-- 페이지네이션 버튼 -->
+        <a href="#">&lt;</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">&gt;</a>
+    </div>
+</div>
 {% endblock %}

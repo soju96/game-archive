@@ -1,0 +1,25 @@
+<!-- ssm/templates/ssm/detail.html -->
+{% extends 'common/base.html' %}
+{% block content %}
+<div class="post-detail">
+    <h1>{{ post.title }}</h1>
+    <div class="post-content">
+        <p>{{ post.content }}</p>
+    </div>
+    <div class="comments-section">
+        <h2>댓글</h2>
+        <ul>
+            {% for comment in comments %}
+            <li>
+                <strong>{{ comment.author }}</strong>: {{ comment.content }}
+            </li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('ssm.add_comment', post_id=post.id) }}" method="post">
+            <label for="comment">댓글을 입력하세요</label>
+            <textarea id="comment" name="content" required></textarea>
+            <button type="submit">등록</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
