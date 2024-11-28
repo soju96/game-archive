@@ -2,20 +2,20 @@
 
 {% block title %}KSJ's Amazing Game Deals{% endblock %}
 
-{% block head %}
-    {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/ksj-css/ksj.css') }}">
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ksj-css/ksj.css') }}">
 {% endblock %}
 
 
 {% block content %}
 <div class="container mt-5">
     <!-- 타임딜 배너 -->
-    <div class="mb-4">
+    <!-- <div class="mb-4">
         <a href="/ksj/timedeal">
             <img src="{{ url_for('static', filename='images/timedeal_banner.jpg') }}" class="img-fluid w-100" alt="Time Deal Banner">
         </a>
-    </div>
+    </div> -->
 
     <h1 class="text-center mb-4">기본게임할인페이지</h1>
     <p class="text-center text-muted">Discover amazing discounts on your favorite games and save big.</p>
