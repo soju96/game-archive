@@ -25,10 +25,22 @@
         <div>
             <span class="fw-bold">Filter by:</span>
         </div>
-        <select id="filter" class="form-select w-auto">
-            <option value="high" {% if filter_type == 'high' %}selected{% endif %}>Highest Discount</option>
-            <option value="low" {% if filter_type == 'low' %}selected{% endif %}>Lowest Discount</option>
-        </select>
+        <div>
+            <label for="filter" class="me-2">할인율:</label>
+            <select id="filter" class="form-select d-inline-block w-auto me-4">
+                <option value="high" {% if filter_type == 'high' %}selected{% endif %}>할인율 높은 순</option>
+                <option value="low" {% if filter_type == 'low' %}selected{% endif %}>할인율 낮은 순</option>
+            </select>
+
+            <label for="category" class="me-2">카테고리:</label>
+            <select id="category" class="form-select d-inline-block w-auto">
+                <option value="" {% if not category_filter %}selected{% endif %}>전체</option>
+                <option value="Specials" {% if category_filter == 'Specials' %}selected{% endif %}>Specials</option>
+                <option value="Coming Soon" {% if category_filter == 'Coming Soon' %}selected{% endif %}>Coming Soon</option>
+                <option value="Top Sellers" {% if category_filter == 'Top Sellers' %}selected{% endif %}>Top Sellers</option>
+                <option value="New Releases" {% if category_filter == 'New Releases' %}selected{% endif %}>New Releases</option>
+            </select>
+        </div>
     </div>
 
     <!-- 게임 리스트 -->
@@ -37,17 +49,30 @@
             {% for game in games %}
             <div class="col">
                 <div class="card h-100">
-                    <img src="{{ game.image_url }}" class="card-img-top" alt="{{ game.name }}">
+                    {% if game.image_url %}
+                        <img src="{{ game.image_url }}" class="card-img-top" alt="{{ game.name }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/default_game.jpg') }}" class="card-img-top" alt="No Image">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ game.name }}</h5>
                         <p class="card-text">
-                            <span class="text-danger">{{ game.final_price }}원</span>
-                            {% if game.original_price %}
-                            <span class="text-muted"><s>{{ game.original_price }}원</s></span>
+                            {% if game.final_price == "무료" %}
+                                <span class="text-danger">무료</span>
+                            {% else %}
+                                <span class="text-danger">{{ game.final_price }}원</span>
+                                {% if game.original_price != "무료" %}
+                                    <span class="text-muted"><s>{{ game.original_price }}원</s></span>
+                                {% endif %}
                             {% endif %}
                         </p>
-                        <p class="card-text text-success">{{ game.discount_percent }}% Off</p>
+                        {% if game.discount_percent > 0 %}
+                            <p class="card-text text-success">{{ game.discount_percent }}% Off</p>
+                        {% endif %}
                         <a href="https://store.steampowered.com/app/{{ game.id }}" class="btn btn-primary btn-sm" target="_blank">View on Steam</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">{{ game.category }}</small>
                     </div>
                 </div>
             </div>
@@ -66,21 +91,21 @@
                 <!-- 이전 버튼 -->
                 {% if current_page > 1 %}
                 <li class="page-item">
-                    <a class="page-link" href="?filter={{ filter_type }}&page={{ current_page - 1 }}">&laquo;</a>
+                    <a class="page-link" href="?filter={{ filter_type }}{% if category_filter %}&category={{ category_filter }}{% endif %}&page={{ current_page - 1 }}">&laquo;</a>
                 </li>
                 {% endif %}
 
                 <!-- 페이지 번호 -->
                 {% for page_num in range(1, total_pages + 1) %}
                 <li class="page-item {% if page_num == current_page %}active{% endif %}">
-                    <a class="page-link" href="?filter={{ filter_type }}&page={{ page_num }}">{{ page_num }}</a>
+                    <a class="page-link" href="?filter={{ filter_type }}{% if category_filter %}&category={{ category_filter }}{% endif %}&page={{ page_num }}">{{ page_num }}</a>
                 </li>
                 {% endfor %}
 
                 <!-- 다음 버튼 -->
                 {% if current_page < total_pages %}
                 <li class="page-item">
-                    <a class="page-link" href="?filter={{ filter_type }}&page={{ current_page + 1 }}">&raquo;</a>
+                    <a class="page-link" href="?filter={{ filter_type }}{% if category_filter %}&category={{ category_filter }}{% endif %}&page={{ current_page + 1 }}">&raquo;</a>
                 </li>
                 {% endif %}
             </ul>
@@ -92,7 +117,15 @@
     // 필터 변경 시 페이지 이동
     document.getElementById('filter').addEventListener('change', function () {
         const filter = this.value;
-        window.location.href = `?filter=${filter}&page=1`;
+        const category = document.getElementById('category').value;
+        window.location.href = `?filter=${filter}&category=${category}&page=1`;
+    });
+
+    // 카테고리 변경 시 페이지 이동
+    document.getElementById('category').addEventListener('change', function () {
+        const category = this.value;
+        const filter = document.getElementById('filter').value;
+        window.location.href = `?filter=${filter}&category=${category}&page=1`;
     });
 </script>
 {% endblock %}
