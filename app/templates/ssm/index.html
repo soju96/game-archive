@@ -11,20 +11,20 @@
     <div class="guide-container">
         <h1 class="mb-4">공략 게시판</h1>
         <div class="popular-strategies mb-4">
-            <h2>인기 공략</h2>
+            <h2>🔥 인기 공략</h2>
             <ul class="list-unstyled">
                 <li><a href="/ssm/question/1">공략 더미 테스트 1</a> 조회수 520</li>
                 <li><a href="/ssm/question/2">공략 더미 테스트 2</a> 조회수 550</li>
                 <li><a href="/ssm/question/3">공략 더미 테스트 3</a> 조회수 549</li>
             </ul>
         </div>
-        <table class="table table-bordered">
+        <table class="guide-table">
             <thead class="thead-light">
                 <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>글쓴이</th>
-                    <th>조회수</th>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">글쓴이</th>
+                    <th scope="col">조회수</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,26 +40,22 @@
         </table>
 
         <!-- 페이지 네비게이션 -->
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
-                    <a class="page-link" href="{{ url_for('ssm.index', page=current_page - 1) }}" aria-label="Previous">
-                        <span aria-hidden="true">&lt;</span>
-                    </a>
-                </li>
+        <div class="guide-footer">
+            <div class="guide-pagination">
+                <!-- 이전 페이지 -->
+                <a href="{{ url_for('ssm.index', page=current_page - 1) }}" class="prev {% if current_page == 1 %}disabled{% endif %}">&lt;</a>
+                <!-- 페이지 번호 -->
                 {% for page_num in range(1, total_pages + 1) %}
-                <li class="page-item {% if page_num == current_page %}active{% endif %}">
-                    <a class="page-link" href="{{ url_for('ssm.index', page=page_num) }}">{{ page_num }}</a>
-                </li>
+                <a href="{{ url_for('ssm.index', page=page_num) }}" class="{% if page_num == current_page %}active{% endif %}">
+                    {{ page_num }}
+                </a>
                 {% endfor %}
-                <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
-                    <a class="page-link" href="{{ url_for('ssm.index', page=current_page + 1) }}" aria-label="Next">
-                        <span aria-hidden="true">&gt;</span>
-                    </a>
-                </li>
-            </ul>
-            <a href="{{ url_for('ssm.submit_question') }}" class="btn btn-primary mt-4 float-end">질문 등록</a>
-        </nav> 
+                <!-- 다음 페이지 -->
+                <a href="{{ url_for('ssm.index', page=current_page + 1) }}" class="next {% if current_page == total_pages %}disabled{% endif %}">&gt;</a>
+            </div>
+            <a href="{{ url_for('ssm.submit_question') }}" class="guide-button">공략 등록</a>
+        </div>
+        
     </div>
 </div>
 {% endblock %}
