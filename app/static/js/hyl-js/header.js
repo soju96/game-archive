@@ -39,16 +39,9 @@ typeWriter();
 
 document.querySelectorAll('.hyl-dropdown-button').forEach(button => {
 button.addEventListener('click', function (event) {
-    event.stopPropagation(); // 클릭 이벤트가 부모로 전파되지 않도록 방지
+    event.stopPropagation();
     const dropdown = this.parentElement;
     dropdown.classList.toggle('show');
-});
-});
-
-// 드롭다운 닫기
-window.addEventListener('click', () => {
-document.querySelectorAll('.hyl-dropdown').forEach(dropdown => {
-    dropdown.classList.remove('show');
 });
 });
 

@@ -198,10 +198,22 @@
 }
 
 /* ----------- 타임딜 영역 스타일 ----------- */
+.time-deal-link {
+    display: block;
+    text-decoration: none; 
+    color: inherit;
+}
+
+.time-deal-link:hover {
+    cursor: pointer; 
+    filter: brightness(0.9); 
+}
+
 .time-deal-section {
     position: relative;
     width: 100%;
-    height: 70vh; /* 섹션 높이를 조절하여 검색창과 겹치도록 함 */
+    height: auto;
+    min-height: 70vh; /* 섹션 높이를 조절하여 검색창과 겹치도록 함 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -217,8 +229,8 @@
     font-family: 'intelone-mono-font-family-italic';
     color: #ffffff;
     text-shadow: 0 0 4px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
-    white-space: nowrap;
-    overflow: hidden;
+    white-space: normal; 
+    overflow-wrap: break-word;
     border-right: 1px solid #ffffff;
     display: inline-block;
     animation: blink-caret 0.7s step-end infinite;
@@ -228,7 +240,7 @@
 .time-deal-image {
     position: absolute;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     top: 0;
     z-index: -1;
@@ -255,6 +267,9 @@
     gap: 30px;
     margin-bottom: 20px;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap; 
 }
 
 /* 타이틀 설정 */
@@ -360,68 +375,6 @@
     background-color: #260c35;
 }
 
-/* 필터 버튼 */
-.hyl-filter-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-left: 10px;
-}
-
-.hyl-dropdown {
-    position: relative;
-    padding-right: 10px;
-}
-
-.hyl-dropdown-button {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    padding: 12px 30px;
-    border-radius: 20px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    align-items: center;
-    gap: 5px;
-    font-size: 1.4vh;
-    font-family: 'intelone-mono-font-family-italic';
-    font-weight: bold;
-}
-
-.hyl-dropdown-button:hover {
-    background-color: #eaeaea;
-}
-
-.hyl-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 10px;
-    top: 45px;
-    left: 0;
-    z-index: 100;
-}
-
-.hyl-dropdown:hover .hyl-dropdown-content {
-    display: block;
-}
-
-.hyl-dropdown-content a {
-    display: block;
-    padding: 10px;
-    color: #333 !important;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.2vh;
-}
-
-.hyl-dropdown-content a:hover {
-    background-color: #f0f0f0;
-}
-
 /* ----------- 햄버거 메뉴 스타일 ----------- */
 
 .hamburger-menu {
@@ -488,9 +441,7 @@
 
 
 /* ----------- 반응형 레이아웃 ----------- */
-
-/* 화면이 작아질 때 네비게이션 숨기고 햄버거 메뉴 표시 */
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
     .custom-nav-link,
     .navbtn {
         display: none; /* 네비게이션 숨김 */
@@ -498,5 +449,9 @@
 
     .hamburger-menu {
         display: block; /* 햄버거 메뉴 표시 */
+    }
+
+    .letter {
+        font-size: 14px; /* 작은 화면에서 글씨 크기 조정 */
     }
 }

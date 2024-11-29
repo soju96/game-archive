@@ -1,14 +1,55 @@
 <!-- templates/hyl/qna.html -->
-{% extends 'common/base.html' %}
+{% extends "common/base.html" %}
 
-{% block title %}Q&A - Game Achive{% endblock %}
+{% block title %}질문 게시판{% endblock %}
 
-<!-- 질문 게시판 CSS -->
 {% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hyl-css/qna.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div>
-
+<div>
+    <div class="qna-container">
+        <h1 class="mb-4">질문 게시판</h1>
+        <div class="qna-popular mb-4">
+            <h2>🔥 인기 질문</h2>
+            <ul id="popular-questions" class="list-group"></ul>
+        </div>
+        <table class="qna-table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">글쓴이</th>
+                    <th scope="col">조회수</th>
+                </tr>
+            </thead>
+            <tbody id="questions-table">
+                <!-- JavaScript로 동적으로 추가 -->
+            </tbody>
+        </table>
+        <!-- 페이지네이션 및 버튼 추가 -->
+        <div class="qna-footer">
+            <div class="qna-pagination">
+                <a href="#" class="prev"> &lt; </a>
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a href="#" class="next"> &gt; </a>
+            </div>
+            <button class="qna-button" data-url="{{ url_for('hyl.qna_create') }}">질문 등록</button>
+        </div>
     </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/hyl-js/qna.js') }}"></script>
 {% endblock %}

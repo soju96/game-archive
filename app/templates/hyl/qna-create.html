@@ -1,0 +1,63 @@
+<!-- templates/hyl/qna.html -->
+{% extends "common/base.html" %}
+
+{% block title %}질문 게시판{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hyl-css/qna-create.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="qna-c-container">
+    <h1 class="qna-c-title">질문 등록</h1>
+    <div class="qna-c-form-container">
+        <h2 class="qna-c-subtitle">새로운 질문 작성하기</h2>
+        <form class="qna-c-form" method="POST" action="/qna/create">
+            <!-- 제목 -->
+            <div class="qna-c-form-group">
+                <label for="qna-title" class="qna-c-label">제목</label>
+                <input
+                    type="text"
+                    id="qna-title"
+                    name="title"
+                    class="qna-c-input"
+                    placeholder="질문의 제목을 입력하세요"
+                    required
+                />
+            </div>
+            <!-- 카테고리 -->
+            <div class="qna-c-form-group">
+                <label for="qna-category" class="qna-c-label">카테고리</label>
+                <select id="qna-category" name="category" class="qna-c-select" required>
+                    <option value="general">일반</option>
+                    <option value="gameplay">게임플레이</option>
+                    <option value="technical" selected>기술적 문제</option>
+                    <option value="story">게임 스토리/세계관</option>
+                </select>
+            </div>
+            <!-- 질문 내용 -->
+            <div class="qna-c-form-group">
+                <label for="qna-content" class="qna-c-label">질문 내용</label>
+                <textarea
+                    id="qna-content"
+                    name="content"
+                    class="qna-c-textarea"
+                    placeholder="자세한 질문 내용을 입력하세요"
+                    rows="5"
+                    required
+                ></textarea>
+            </div>
+            <!-- 토글 버튼 -->
+            <div class="qna-c-toggle">
+                <button type="submit" class="qna-c-toggle-item active">질문 등록</button>
+                <a href="{{ url_for('hyl.qna') }}" class="qna-c-toggle-item">질문 목록</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/hyl-js/qna.js') }}"></script>
+{% endblock %}
