@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  nfs-server:
+    image: itsthenetwork/nfs-server-alpine  # NFS server image
+    container_name: nfs-server
+    environment:
+      - SHARED_DIRECTORY=/mnt/nfs_share  # Path to the directory to be shared
+    volumes:
+      - nfs-data:/mnt/nfs_share           # Local path to share with MySQL container
+    ports:
+      - "2050:2050"                      # NFS port
+    command: /bin/sh -c "mkdir -p /mnt/nfs_share && /usr/sbin/rpcbind && /usr/sbin/nfsd -N 2 && /usr/sbin/rpc.mountd"
+
+  mysql:
+    image: sh330400/mysql8:1.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password  # Set the MySQL root password
+    volumes:
+      - nfs-data:/var/lib/mysql  # Mount NFS volume as MySQL data directory
+    networks:
+      - nfs-network
+
+volumes:
+  nfs-data:
+    driver: local  # Local volume to mount from NFS server
+
+networks:
+  nfs-network:
+    driver: bridge
