@@ -12,7 +12,7 @@ COPY requirements.txt .
 # 의존성 설치
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 로컬의 모든 파일을 컨테이너로 복사
+# game-archive 폴더의 모든 파일과 하위 폴더를 컨테이너로 복사
 COPY . .
 
 # Flask 애플리케이션 실행

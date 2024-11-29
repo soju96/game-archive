@@ -42,7 +42,25 @@ def create_app():
                 return jsonify({"error": "Database error", "details": str(e)}), 500
             except Exception as e:
                 return jsonify({"error": str(e)}), 500
-    
+        @app.route('/add-news')
+        def add_news():
+            try:
+                # CREATE: 새로운 뉴스 항목 추가
+                new_news = News(
+                    news_title='New Technology Update',
+                    content='This is the content of the new technology update.',
+                    auth='John Doe'
+                )
+                db.session.add(new_news)
+                db.session.commit()
+
+                return jsonify({"message": "News added successfully"}), 200
+
+            except SQLAlchemyError as e:
+                db.session.rollback()
+                return jsonify({"error": "Database error", "details": str(e)}), 500
+            except Exception as e:
+                return jsonify({"error": str(e)}), 500
     
         
     # Import and register Blueprints
