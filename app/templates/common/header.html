@@ -27,18 +27,30 @@
                     </nav>
                 </div>
 
-                <!-- 로그인 및 회원가입 버튼 -->
                 <div class="header-box">
-                    <div class="custom-nav-right buttons">
-                        <button class="navbtn" id="loginButton" data-url="{{ url_for('hjw.index') }}">
-                            Login
-                        </button>
-                    </div>
-                    <div class="custom-nav-right buttons">
-                        <button class="navbtn" id="signupButton" data-url="{{ url_for('hjw.index') }}">
-                            Sign Up
-                        </button>
-                    </div>
+                    <!-- 로그인 여부 확인 -->
+                    {% if not session.get('user_id') %}
+                        <!-- 로그인 및 회원가입 버튼 (비로그인 상태) -->
+                        <div class="custom-nav-right buttons">
+                            <button class="navbtn" id="loginButton" data-url="{{ url_for('hjw.index') }}">
+                                Login
+                            </button>
+                        </div>
+                        <div class="custom-nav-right buttons">
+                            <button class="navbtn" id="signupButton" data-url="{{ url_for('hjw.signup') }}">
+                                Sign Up
+                            </button>
+                        </div>
+                    {% else %}
+                        <!-- 로그아웃 버튼 (로그인 상태) -->
+                        <div class="custom-nav-right buttons">
+                            <form action="{{ url_for('hjw.logout') }}" method="POST">
+                                <button type="submit" class="navbtn">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <!-- 햄버거 메뉴 -->
@@ -51,7 +63,7 @@
                         <a href="{{ url_for('hyl.qna') }}">Q&A Corner</a>
                         <hr> <!-- 구분선 -->
                         <a href="{{ url_for('hjw.index') }}">Login</a>
-                        <a href="{{ url_for('hjw.index') }}">Sign up</a>
+                        <a href="{{ url_for('hjw.signup') }}">Sign up</a>
                     </div>
                 </div>
         </div>
