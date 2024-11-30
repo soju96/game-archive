@@ -22,3 +22,7 @@ class User(db.Model):
     
     def __repr__(self):
         return f"<User {self.username}>"
+
+    def update_last_login(self):
+        self.last_login = db.func.now()
+        db.session.commit()
