@@ -7,5 +7,5 @@ class Config:
 
     # JWT 관련 설정
     JWT_SECRET_KEY = 'your-jwt-secret-key'  # JWT 서명에 사용할 비밀 키
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=15)  # Access Token 만료 시간
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=30)  # Access Token 만료 시간
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=7)  # Refresh Token 만료 시간
