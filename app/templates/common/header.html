@@ -23,7 +23,7 @@
                         <a href="{{ url_for('ksj.index') }}" class="custom-nav-link">Deals & Discounts</a>
                         <a href="{{ url_for('ssm.index') }}" class="custom-nav-link">Tips & Guides</a>
                         <a href="{{ url_for('csm.index') }}" class="custom-nav-link">Game News</a>
-                        <a href="{{ url_for('hyl.qna') }}" class="custom-nav-link">Q&A Corner</a>
+                        <a href="{{ url_for('hyl.qna') }}" class="custom-nav-link" id="qnaLink">Q&A Corner</a>
                     </nav>
                 </div>
 
@@ -102,3 +102,16 @@
      
      </main>
  </div>
+
+ <script>
+    document.getElementById('qnaLink').addEventListener('click', function(event) {
+        // 로그인 여부를 Jinja로 확인하고 JavaScript 변수에 저장
+        var isLoggedIn = "{{ session.get('user_id') is not none }}";
+        
+        if (isLoggedIn === "False") {
+            event.preventDefault();  // Q&A 페이지로 이동하지 않도록 방지
+            alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+            window.location.href = "{{ url_for('hjw.index') }}";  // 로그인 페이지로 리다이렉트
+        }
+    });
+</script>
