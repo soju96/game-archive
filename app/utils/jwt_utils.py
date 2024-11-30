@@ -5,8 +5,8 @@ class JWTUtils:
     @staticmethod
     def generate_tokens(identity):
         """Access Token과 Refresh Token 생성"""
-        access_token = create_access_token(identity=identity)
-        refresh_token = create_refresh_token(identity=identity)
+        access_token = create_access_token(identity=str(identity))
+        refresh_token = create_refresh_token(identity=str(identity))
         return access_token, refresh_token
 
     @staticmethod
