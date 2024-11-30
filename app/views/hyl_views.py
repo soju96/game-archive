@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, jsonify
-
+from flask_jwt_extended import jwt_required
 bp = Blueprint('hyl', __name__, url_prefix='/hyl')
 
 
@@ -22,7 +22,8 @@ def index():
     return render_template('hyl/index.html')
 
 # 질문 게시판
-@bp.route('/qna')
+@bp.route('/qna', methods=['GET'])
+@jwt_required()
 def qna():
     return render_template('hyl/qna.html')
 
