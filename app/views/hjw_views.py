@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, make_response, jsonify, current_app, session
 from app.models import User
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
 from app import db
-import bcrypt
+from app.utils.jwt_utils import JWTUtils
+import bcrypt, json
 
 bp = Blueprint('hjw', __name__, url_prefix='/hjw')
 
@@ -18,13 +19,23 @@ def index():
 
         # 로그인 검증
         if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-            flash("로그인 성공!")  # Flash 메시지 전달
-            return redirect(url_for('main.index'))  # 메인 화면으로 리다이렉트
-        else:
-            flash("아이디 또는 비밀번호가 잘못되었습니다.")
-            return render_template('hjw/index.html')
+            # JWT 생성 (중복 제거)
+            access_token, refresh_token = JWTUtils.generate_tokens(user.user_id)
 
-    # GET 요청 처리
+            # 세션에 사용자 정보 저장
+            session['user_id'] = user.user_id
+            session['username'] = user.username
+
+            # JWT를 쿠키에 저장
+            response = make_response(redirect(url_for('main.index')))
+            response.set_cookie('access_token', access_token, httponly=True, secure=True)
+            response.set_cookie('refresh_token', refresh_token, httponly=True, secure=True)
+
+            return response
+
+        flash("아이디 또는 비밀번호가 잘못되었습니다.", category="error")
+        return render_template('hjw/index.html')
+
     return render_template('hjw/index.html')
 
 
@@ -47,7 +58,7 @@ def signup():
             error_username = "이미 존재하는 아이디입니다."
 
         if password != confirm_password:
-            error_password = "비밀번호와 비밀번호 확인이 일치하지 않습니다."
+            error_password = "비밀번호가 일치하지 않습니다."
 
         # 오류가 없으면 사용자 등록
         if not error_username and not error_password:
@@ -66,16 +77,21 @@ def signup():
 @bp.route('/tokens', methods=['POST'])
 def tokens():
     data = request.get_json()  # 클라이언트로부터 JSON 데이터 받기
-    username = data.get('username')
-    password = data.get('password')
+
+    # 데이터 유효성 검증
+    if not data or not data.get('username') or not data.get('password'):
+        return jsonify({"message": "Invalid data"}), 400
+
+    username = data['username']
+    password = data['password']
 
     # 데이터베이스에서 사용자 조회
     user = User.query.filter_by(username=username).first()
 
     # 로그인 검증
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-        access_token = create_access_token(identity=str(user.user_id))
-        refresh_token = create_refresh_token(identity=str(user.user_id))
+        # JWT 토큰 생성
+        access_token, refresh_token = JWTUtils.generate_tokens(user.user_id)
 
         # 토큰 반환
         return jsonify({
@@ -91,7 +107,14 @@ def tokens():
 @jwt_required()
 def protected():
     current_user = get_jwt_identity()
-    return jsonify({"message": f"안녕하세요, 사용자 {current_user}님!"}), 200
+    response = {
+        "message": f"안녕하세요, 사용자 {current_user}님!"
+    }
+    return current_app.response_class(  # current_app으로 Flask 애플리케이션 객체 사용
+        response=json.dumps(response, ensure_ascii=False),  # ensure_ascii=False로 한글 처리
+        status=200,
+        mimetype='application/json'
+    )
 
 
 # Refresh Token을 사용한 Access Token 갱신 API
@@ -100,7 +123,23 @@ def protected():
 def refresh():
     current_user = get_jwt_identity()
     new_access_token = create_access_token(identity=current_user)
-    return jsonify({
-        "message": "새 Access Token이 발급되었습니다.",
-        "access_token": new_access_token
-    }), 200
+
+    # 새로운 Access Token을 쿠키에 저장
+    response = jsonify({"message": "새 Access Token이 발급되었습니다."})
+    response.set_cookie('access_token', new_access_token, httponly=True, secure=True)
+    return response
+
+
+@bp.route('/logout', methods=['POST'])
+def logout():
+    response = make_response(redirect(url_for('hjw.index')))
+    
+    # 세션 초기화
+    session.clear()
+
+    # JWT 쿠키 제거
+    response.delete_cookie('access_token', samesite='Strict')
+    response.delete_cookie('refresh_token', samesite='Strict')
+
+    flash("로그아웃되었습니다.", category="info")
+    return response
