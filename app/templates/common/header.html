@@ -104,14 +104,65 @@
  </div>
 
  <script>
-    document.getElementById('qnaLink').addEventListener('click', function(event) {
-        // 로그인 여부를 Jinja로 확인하고 JavaScript 변수에 저장
+    document.getElementById('qnaLink').addEventListener('click', async function(event) {
+        event.preventDefault();  // 기본 동작을 막습니다.
+
+        // 로그인 여부를 먼저 확인합니다.
         var isLoggedIn = "{{ session.get('user_id') is not none }}";
-        
+
         if (isLoggedIn === "False") {
-            event.preventDefault();  // Q&A 페이지로 이동하지 않도록 방지
+            // 로그인되어 있지 않은 경우 알림창을 띄우고 로그인 페이지로 이동합니다.
             alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
-            window.location.href = "{{ url_for('hjw.index') }}";  // 로그인 페이지로 리다이렉트
+            window.location.href = "{{ url_for('hjw.index') }}";
+        } else {
+            try {
+                // Q&A 페이지 접근 시도
+                let response = await fetch("{{ url_for('hyl.qna') }}", {
+                    method: 'GET',
+                    credentials: 'same-origin'
+                });
+
+                if (response.status === 401) {
+                    // Access Token이 만료된 경우 Refresh Token을 사용하여 새로운 Access Token 발급 요청
+                    let refreshResponse = await fetch("{{ url_for('hjw.refresh') }}", {
+                        method: 'POST',
+                        credentials: 'same-origin'
+                    });
+
+                    if (refreshResponse.ok) {
+                        // 새로운 Access Token 발급 성공 시, 다시 Q&A 페이지 접근 시도
+                        response = await fetch("{{ url_for('hyl.qna') }}", {
+                            method: 'GET',
+                            credentials: 'same-origin'
+                        });
+
+                        if (response.ok) {
+                            window.location.href = "{{ url_for('hyl.qna') }}";
+                        } else {
+                            alert("페이지에 접근할 수 없습니다. 다시 로그인해 주세요.");
+                            window.location.href = "{{ url_for('hjw.index') }}";
+                        }
+                    } else {
+                        // Refresh Token도 유효하지 않은 경우 명시적으로 로그아웃 처리
+                        await fetch("{{ url_for('hjw.logout') }}", {
+                            method: 'POST',
+                            credentials: 'same-origin'
+                        });
+
+                        alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                        window.location.href = "{{ url_for('hjw.index') }}";
+                    }
+                } else if (response.ok) {
+                    // 토큰이 유효하다면 Q&A 페이지로 이동
+                    window.location.href = "{{ url_for('hyl.qna') }}";
+                } else {
+                    alert("오류가 발생했습니다. 다시 로그인해 주세요.");
+                    window.location.href = "{{ url_for('hjw.index') }}";
+                }
+            } catch (error) {
+                console.error('오류가 발생했습니다.', error);
+                alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+            }
         }
     });
 </script>
